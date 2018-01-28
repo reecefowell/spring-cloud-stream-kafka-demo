@@ -1,0 +1,6 @@
+- hosts: kafka
+  become: yes
+  remote_user: ubuntu
+  gather_facts: no
+  roles:
+    - kafka

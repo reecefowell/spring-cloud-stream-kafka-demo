@@ -1,0 +1,23 @@
+- name: Make Kafka dir
+  file:
+    path: ~/kafka
+    state: directory
+    mode: 777
+    recurse: yes
+
+- name: Untar Kafka
+  unarchive:
+    src: http://apache.mirror.anlx.net/kafka/1.0.0/kafka_2.11-1.0.0.tgz
+    dest: ~/kafka
+    remote_src: yes
+    extra_opts: [--strip-components=1]
+
+- name: Allow topic deletion in Kafka
+  lineinfile:
+    dest: ~/kafka/config/server.properties
+    regexp: ^#?delete.topic.enable
+    line: delete.topic.enable = true
+    state: present
+
+- name: Start the Kafka Server
+  shell: nohup ~/kafka/bin/kafka-server-start.sh ~/kafka/config/server.properties > ~/kafka/kafka.log 2>&1 &

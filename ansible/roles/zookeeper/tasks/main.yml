@@ -1,0 +1,9 @@
+- name: Run the equivalent of "apt-get update" as a separate step
+  raw: apt-get update
+
+- name: Install ZooKeeper
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  with_items:
+    - zookeeperd

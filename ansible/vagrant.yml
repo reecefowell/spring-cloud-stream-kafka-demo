@@ -1,0 +1,8 @@
+- include: common.yml
+- include: java.yml
+- include: zookeeper.yml
+- include: kafka.yml
+
+- hosts: localhost
+  connection: local
+  gather_facts: no

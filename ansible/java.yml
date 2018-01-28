@@ -1,0 +1,6 @@
+- hosts: java
+  become: yes
+  remote_user: ubuntu
+  gather_facts: no
+  roles:
+    - java
