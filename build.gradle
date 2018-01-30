@@ -22,8 +22,37 @@ repositories {
     mavenCentral()
 }
 
+sourceSets {
+    componentTest {
+        compileClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output
+    }
+}
+
+configurations {
+    componentTestCompile.extendsFrom testCompile
+    componentTestRuntime.extendsFrom testRuntime
+}
+
+task componentTest(type: Test) {
+    testClassesDir = sourceSets.componentTest.output.classesDir
+    classpath = sourceSets.componentTest.runtimeClasspath
+}
+
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter')
+    compile('org.springframework.cloud:spring-cloud-starter-stream-kafka')
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.cloud:spring-cloud-stream-test-support')
 }
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Dalston.SR1"
+    }
+}
+
+check.dependsOn componentTest
+
+componentTest.mustRunAfter test

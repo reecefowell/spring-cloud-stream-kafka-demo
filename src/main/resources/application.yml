@@ -1,0 +1,17 @@
+spring:
+
+---
+spring:
+  profiles: default
+  cloud:
+    stream:
+      bindings:
+        user-updates:
+          destination: user-updates.send
+          content-type: application/json
+---
+spring:
+  profiles: test
+  cloud:
+    config:
+      enabled: false
