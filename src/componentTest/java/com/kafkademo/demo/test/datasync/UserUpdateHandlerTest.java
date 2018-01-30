@@ -3,6 +3,7 @@ package com.kafkademo.demo.test.datasync;
 import com.kafkademo.demo.datasync.UserUpdate;
 import com.kafkademo.demo.datasync.UserUpdateHandler;
 import com.kafkademo.demo.datasync.UserUpdateHandler.UserEvent;
+import com.kafkademo.demo.model.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +14,7 @@ import org.springframework.messaging.Message;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static com.kafkademo.demo.model.builder.UserBuilder.aUser;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -35,10 +37,12 @@ public class UserUpdateHandlerTest {
 
     @Test
     public void sendNewUser() {
+        User user = aUser().build();
+
         UserEvent userEvent = new UserEvent();
-        userEvent.id = 1L;
-        userEvent.firstName = "Reece";
-        userEvent.lastName = "Fowell";
+        userEvent.id = user.getId();
+        userEvent.firstName = user.getFirstName();
+        userEvent.lastName = user.getLastName();
 
         userUpdateHandler.publish(userEvent);
 
@@ -48,8 +52,8 @@ public class UserUpdateHandlerTest {
 
         assertThat(receivedForTarget, is(notNullValue()));
         UserEvent actualForTarget = receivedForTarget.getPayload();
-        assertThat(actualForTarget.id, is(1L));
-        assertThat(actualForTarget.firstName, is("Reece"));
-        assertThat(actualForTarget.lastName, is("Fowell"));
+        assertThat(actualForTarget.id, is(user.getId()));
+        assertThat(actualForTarget.firstName, is(user.getFirstName()));
+        assertThat(actualForTarget.lastName, is(user.getLastName()));
     }
 }
