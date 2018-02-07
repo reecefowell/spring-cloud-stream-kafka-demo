@@ -37,7 +37,7 @@ public class UserUpdateHandlerTest {
     }
 
     @Test
-    public void sendNewUser() {
+    public void publishNewUser() {
         User user = aUser().build();
 
         UserEvent userEvent = new UserEvent();
