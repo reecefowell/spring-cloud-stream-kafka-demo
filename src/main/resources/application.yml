@@ -6,7 +6,7 @@ spring:
   cloud:
     stream:
       bindings:
-        user-updates:
+        user-updates-publish:
           destination: user-updates.send
           content-type: application/json
 ---

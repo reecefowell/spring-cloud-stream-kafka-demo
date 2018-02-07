@@ -1,8 +1,8 @@
 package com.kafkademo.demo.test.datasync;
 
-import com.kafkademo.demo.datasync.UserUpdate;
 import com.kafkademo.demo.datasync.UserUpdateHandler;
 import com.kafkademo.demo.datasync.UserUpdateHandler.UserEvent;
+import com.kafkademo.demo.datasync.UserUpdatesPublish;
 import com.kafkademo.demo.model.User;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +24,8 @@ import static org.hamcrest.Matchers.notNullValue;
 @ActiveProfiles("test")
 public class UserUpdateHandlerTest {
     @Autowired
-    private UserUpdate output;
+    @Autowired
+    private UserUpdatesPublish output;
     @Autowired
     private MessageCollector messageCollector;
     @Autowired
@@ -32,7 +33,7 @@ public class UserUpdateHandlerTest {
 
     @Before
     public void setUp() {
-        messageCollector.forChannel(output.create()).clear();
+        messageCollector.forChannel(output.userUpdatesPublish()).clear();
     }
 
     @Test
@@ -47,7 +48,7 @@ public class UserUpdateHandlerTest {
         userUpdateHandler.publish(userEvent);
 
         Message<UserEvent> receivedForTarget = (Message<UserEvent>) messageCollector
-            .forChannel(output.create())
+            .forChannel(output.userUpdatesPublish())
             .poll();
 
         assertThat(receivedForTarget, is(notNullValue()));

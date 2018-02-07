@@ -1,8 +1,8 @@
 package com.kafkademo.demo.config;
 
-import com.kafkademo.demo.datasync.UserUpdate;
+import com.kafkademo.demo.datasync.UserUpdatesPublish;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 
-@EnableBinding({UserUpdate.class})
+@EnableBinding({UserUpdatesPublish.class})
 public class KafkaConfig {
 }

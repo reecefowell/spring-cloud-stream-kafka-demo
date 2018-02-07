@@ -3,9 +3,9 @@ package com.kafkademo.demo.datasync;
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
 
-public interface UserUpdate {
-    String SEND = "user-updates";
+public interface UserUpdatesPublish {
+    String PUBLISH = "user-updates-publish";
 
-    @Output(SEND)
-    MessageChannel create();
+    @Output(PUBLISH)
+    MessageChannel userUpdatesPublish();
 }

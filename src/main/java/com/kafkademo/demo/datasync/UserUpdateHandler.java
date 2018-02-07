@@ -6,12 +6,12 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
-import static com.kafkademo.demo.datasync.UserUpdate.SEND;
+import static com.kafkademo.demo.datasync.UserUpdatesPublish.PUBLISH;
 
 @Component
 public class UserUpdateHandler {
     @Autowired
-    @Qualifier(SEND)
+    @Qualifier(PUBLISH)
     private MessageChannel output;
 
     public void publish(UserEvent userEvent) {
